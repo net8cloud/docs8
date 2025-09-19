@@ -8,14 +8,32 @@ export interface NavItem {
 }
 
 export enum PackageType {
-	Javascript
+	Javascript,
+	Other
 }
 
 export interface PackageInfo {
 	name: string;
+	pkgName: string;
+	title?: string;
+	toc?: Toc[];
+	downloads?: [number, { downloads: number; day: string }[]];
+	downloadsStr?: string;
+	downloadsColor?: string;
+	downloads2?: [number, { downloads: number; day: string }[]];
+	downloads2Str?: string;
+	downloads2Color?: string;
 	version: string;
+	versions?: number;
 	dist?: string;
 	pkgType: PackageType;
 	html: string;
 	lastUpdated?: Date;
+	provider: [string, string];
+}
+
+export interface Toc {
+	title: string;
+	id: string;
+	level: number;
 }

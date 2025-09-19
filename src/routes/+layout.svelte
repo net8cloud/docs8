@@ -178,7 +178,7 @@
 
 <ModeWatcher />
 
-<header class="fixed top-2 right-2 left-2 flex h-12 rounded-lg backdrop-blur-xl">
+<header class="fixed top-2 right-2 left-2 z-100 flex h-12 rounded-lg backdrop-blur-xl">
 	<a href="/" class="flex h-full basis-1/4 items-center gap-0.5 pl-3 text-2xl font-bold">
 		<span>docs</span>
 		<span
