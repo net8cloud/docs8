@@ -193,4 +193,6 @@
 	{@render children?.()}
 </main>
 
-<footer></footer>
+<footer class="mx-12 my-4 text-right text-sm text-muted-foreground">
+	<a href="https://net8.cloud/developers/docs">hosted with &lt;3 by net8</a>
+</footer>

@@ -110,11 +110,11 @@
 				'prose mt-6 max-w-none prose-neutral dark:prose-invert',
 				'prose-headings:mt-8 prose-headings:mb-4',
 				[
-					'prose-code:inline-block prose-code:rounded-sm prose-code:bg-[#24292e] prose-code:px-1.5',
-					'prose-code:font-medium prose-code:text-[#e1e4e8] prose-code:not-dark:hue-rotate-180',
-					'prose-code:not-dark:invert prose-code:before:content-none prose-code:after:content-none'
+					'prose-code:inline-block prose-code:rounded-sm prose-code:bg-muted prose-code:px-1.5',
+					'prose-code:font-medium prose-code:text-foreground',
+					'prose-code:before:content-none prose-code:after:content-none'
 				],
-				'prose-pre:px-2.5 prose-pre:not-dark:hue-rotate-180 prose-pre:not-dark:invert',
+				'prose-pre:bg-muted prose-pre:px-2.5',
 				'prose-img:my-0 prose-img:inline-block'
 			]}
 		>
@@ -236,12 +236,12 @@
 				</Chart.Container>
 			</div>
 		</SidebarItem>
-		<SidebarItem title="Advertisement" icon={Megaphone}>
-			<div
-				class="my-1 flex aspect-5/1 w-full items-center justify-center rounded-lg bg-gradient-to-bl from-purple-300 to-blue-400 text-2xl font-bold text-white dark:from-purple-800 dark:to-blue-900 dark:text-white/80"
-			>
-				thank you &lt;3
-			</div>
-		</SidebarItem>
 	{/if}
+	<SidebarItem title="Advertisement" icon={Megaphone}>
+		<div
+			class="my-1 flex aspect-5/1 w-full items-center justify-center rounded-lg bg-gradient-to-bl from-purple-300 to-blue-400 text-2xl font-bold text-white dark:from-purple-700 dark:to-blue-600"
+		>
+			thank you &lt;3
+		</div>
+	</SidebarItem>
 </aside>

@@ -5,28 +5,20 @@ import markedBidi from 'marked-bidi';
 import { markedEmoji } from 'marked-emoji';
 import markedFootnote from 'marked-footnote';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
-import markedShiki from 'marked-shiki';
-import { createHighlighter, type BundledLanguage } from 'shiki';
+import { markedHighlight } from 'marked-highlight';
+import hljs from 'highlight.js';
 import emojis from '../data/emojis.json';
 import type { Toc } from '$lib/types';
-
-const highlighter = await createHighlighter({
-	langs: ['md', 'ts', 'sh', 'svelte', 'cpp', 'json', 'text'],
-	themes: ['github-dark']
-});
-
-const langs: Record<string, BundledLanguage> = {
-	html: 'svelte',
-	js: 'ts',
-	cjs: 'ts',
-	mjs: 'ts'
-};
 
 const marked = new Marked({
 	async: true,
 	gfm: true,
 	silent: true
 });
+
+const langs: Record<string, string> = {
+	svelte: 'html'
+};
 
 marked.use(
 	markedAlert(),
@@ -42,23 +34,11 @@ marked.use(
 	}),
 	markedFootnote(),
 	gfmHeadingId(),
-	markedShiki({
+	markedHighlight({
 		highlight: (code, lang) => {
-			try {
-				return highlighter.codeToHtml(code, {
-					lang: langs[lang] ?? lang,
-					theme: 'github-dark'
-				});
-			} catch {
-				try {
-					return highlighter.codeToHtml(code, {
-						lang: 'text',
-						theme: 'github-dark'
-					});
-				} catch {
-					return code;
-				}
-			}
+			lang = langs[lang] || lang;
+			const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+			return hljs.highlight(code, { language }).value;
 		}
 	})
 );
