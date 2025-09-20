@@ -8,12 +8,13 @@ export async function getJsPackageDocs(
 	user: string | undefined,
 	pkg: string,
 	path: string,
-	version?: string
+	version?: string,
+	url?: string
 ): Promise<PackageInfo> {
 	if (user === '-') {
 		switch (pkg) {
 			case 'node':
-				return getNodeDocs(path, version);
+				return getNodeDocs(path, version, url);
 			default:
 				throw new Error('Unknown special package');
 		}
@@ -46,6 +47,7 @@ export async function getJsPackageDocs(
 	return {
 		name,
 		pkgName: npm.name,
+		pkgRoot: path ? url : undefined,
 		title: name + ' from NPM',
 		toc,
 		version: ver.version,
@@ -68,7 +70,11 @@ export async function getJsPackageDocs(
 }
 
 // nodejs.org/docs
-export async function getNodeDocs(path: string, version?: string): Promise<PackageInfo> {
+export async function getNodeDocs(
+	path: string,
+	version?: string,
+	url?: string
+): Promise<PackageInfo> {
 	const ver = parseInt(version === 'latest' ? NODE_LATEST : version || NODE_LATEST);
 
 	// eslint-disable-next-line prefer-const
@@ -78,20 +84,19 @@ export async function getNodeDocs(path: string, version?: string): Promise<Packa
 				`https://raw.githubusercontent.com/nodejs/node/refs/heads/v${ver}.x/doc/api/${path ? path : ver < 10 ? '_toc' : 'index'}.md`
 			)
 		).text(),
-		'/-/node.js/'
+		url
 	);
 
-	console.log(toc);
-
-	html = html.replaceAll('.md"', '"');
+	html = html.replace(/(\.md"|\.html")/g, '"');
 
 	const title = html.match(/<h1.*?>(.*?)<\/h1>/)?.[1];
 
-	if (ver < 10) html = html.split('</p>').slice(1).join('</p>');
+	if (ver < 10 && !path) html = html.split('</p>').slice(1).join('</p>');
 
 	return {
 		name: 'Node.js',
 		pkgName: 'https://nodejs.org/en/download',
+		pkgRoot: path ? url : undefined,
 		title: `Node.js${title ? ': ' + title : ''}`,
 		toc,
 		version: ver.toString(),

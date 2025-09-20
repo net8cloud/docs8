@@ -5,11 +5,17 @@ export { suffixes } from '$lib/suffix';
 
 export const providers: Record<
 	string,
-	(user: string | undefined, pkg: string, path: string, version?: string) => Promise<PackageInfo>
+	(
+		user: string | undefined,
+		pkg: string,
+		path: string,
+		version?: string,
+		url?: string
+	) => Promise<PackageInfo>
 > = {
 	javascript: getJsPackageDocs,
-	react: (a, b, c, d) => getJsPackageDocs(a, b + '-react', c, d),
-	svelte: (a, b, c, d) => getJsPackageDocs(a, b + '-svelte', c, d)
+	react: (a, b, c, d, e) => getJsPackageDocs(a, b + '-react', c, d, e),
+	svelte: (a, b, c, d, e) => getJsPackageDocs(a, b + '-svelte', c, d, e)
 };
 
 export function relativeDate(d: Date): [string, 0 | 1 | 2 | 3] {

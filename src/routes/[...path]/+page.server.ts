@@ -17,7 +17,13 @@ export async function load({ params }) {
 
 	if (!resolvedSuffix) return error(404, 'Not Found');
 	try {
-		return await providers[resolvedSuffix](user, pkg, pathSplit.slice(2).join('/'), version);
+		return await providers[resolvedSuffix](
+			user,
+			pkg,
+			pathSplit.slice(2).join('/'),
+			version,
+			'/' + pathSplit.slice(0, 2).join('/') + '/'
+		);
 	} catch (e) {
 		console.error(e);
 		return error(400, 'Bad Request');

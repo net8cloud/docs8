@@ -71,7 +71,28 @@
 <nav
 	class="fixed left-0 flex h-[calc(100vh-4rem)] w-76 flex-col items-start overflow-x-hidden overflow-y-auto border-r pt-2 pr-4 pl-4"
 >
-	<a href="#top" class="mb-1 text-lg font-semibold">{self.title || self.name}</a>
+	{#if self.pkgRoot}
+		<a
+			href={self.pkgRoot}
+			class={[
+				'mb-2 w-full text-xs font-semibold text-muted-foreground uppercase',
+				'underline decoration-transparent transition hover:decoration-current'
+			]}
+		>
+			&larr; {self.name}
+		</a>
+	{/if}
+
+	<a
+		href="#top"
+		class={[
+			'mb-1 w-full text-lg font-semibold',
+			'underline decoration-transparent transition hover:decoration-current'
+		]}
+	>
+		{self.title || self.name}
+	</a>
+
 	{#if self.toc}
 		{#each self.toc as item}
 			<a
@@ -80,7 +101,7 @@
 					'w-full text-ellipsis',
 					item.level > 2 && 'border-l text-muted-foreground',
 					item.level < 3 && 'mt-1 mb-0.5',
-					'underline decoration-transparent hover:decoration-current'
+					'underline decoration-transparent transition hover:decoration-current'
 				]}
 				style="padding-left: {item.level - 2}rem;"
 			>

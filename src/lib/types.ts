@@ -15,6 +15,7 @@ export enum PackageType {
 export interface PackageInfo {
 	name: string;
 	pkgName: string;
+	pkgRoot?: string;
 	title?: string;
 	toc?: Toc[];
 	downloads?: [number, { downloads: number; day: string }[]];
